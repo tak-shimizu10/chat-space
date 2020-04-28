@@ -9,6 +9,8 @@
       = link_to "#", class: "group--edit" do
         Edit
   .chat-main__message-list
+    .messages
+      = render @messages
     .chat-main__message_id_1
       .chat-main__member-info
         .chat-main__member-info__name
@@ -26,10 +28,10 @@
       .chat-main__member-text
         今日は朝から雨
   .chat-main__message-form
-    %form{class: "new-message"}
+    = form_for [@group, @message] do |f|
       .input-box
-        %input{placeholder: "type a message", type: "text", class: "input-box__text"}
-        %label{class: "input-box__image"}
-          = icon('fa', 'images')
-          %input{class: "input-box__image__file", type: "file"}
-      %input{class: "submit-btn", value: "Send", type: "submit"}
+        = f.text_field :content, class: 'input-box__text', placeholder: 'type a message'
+        = f.label :image, class: 'input-box__image' do
+          = icon('fas', 'image', class: 'icon')
+          = f.file_field :image, class: 'input-box__image__file'
+      = f.submit 'Send', class: 'form__submit'
